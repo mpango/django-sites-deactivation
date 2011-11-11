@@ -3,7 +3,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.contrib.sites.models import Site
 from django.contrib.flatpages.models import FlatPage
-from mystore.site_deactivation.models import SiteDeactivation
+from site_deactivation.models import SiteDeactivation
 
 class SiteDeactivationMiddleware(object):
 	"""
