@@ -2,6 +2,9 @@
 
 * copy the ´site_deactivation´ app to your PYTHON_PATH
 * add the ´site_deactivation´ app to your INSTALLED_APPS
+* add ´site_deactivation.SiteDeactivationMiddleware.SiteDeactivationMiddleware´
+  to your MIDDLEWARE_CLASSES as the topmost entry (unless you are using
+  django flatpages, in that case put it just underneath their middleware)
 * run ´python manage.py syncdb´
 
 A good addition to the ´site_deactivation´ app is [django's flatpages app](https://docs.djangoproject.com/en/1.3/ref/contrib/flatpages/ "django flatpages").
