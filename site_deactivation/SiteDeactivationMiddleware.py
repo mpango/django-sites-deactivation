@@ -29,13 +29,13 @@ class SiteDeactivationMiddleware(object):
 		the user to it's static redirect URL. Otherwise simply do nothing.
 		"""
 		path = request.path
-		url = self._get_url(request)
-		current_site = Site.objects.get_current()
+		try:
+			current_site = Site.objects.get(domain__exact=request.META['HTTP_HOST'])
+		except:
+			return None
 		
-		# Only perform deactivation redirects for non-admin and non-FlatPage URLs.
-		is_flat = FlatPage.objects.filter(url__exact="\"%s\""%url, sites__id__exact=current_site.pk).count() > 0
-		if not (path == "/admin" or path.startswith("/admin/") or is_flat):
-			deactivation = SiteDeactivation.objects.filter(site=current_site)
+		if not (path == "/admin" or path.startswith("/admin/")):
+			deactivation = SiteDeactivation.objects.filter(site__id__exact=current_site.pk)
 			
 			# If we found a deactivation, redirect to it's redirect URL.
 			if deactivation.count() == 1:
