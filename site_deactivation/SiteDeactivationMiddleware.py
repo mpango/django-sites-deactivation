@@ -33,8 +33,8 @@ class SiteDeactivationMiddleware(object):
 		current_site = Site.objects.get_current()
 		
 		# Only perform deactivation redirects for non-admin and non-FlatPage URLs.
-		is_flat = FlatPage.objects.filter(url__exact=url, sites__id__exact=current_site.pk)
-		if not (path == "/admin" or path.startswith("/admin/") or is_flat.count() > 0):
+		is_flat = FlatPage.objects.filter(url__exact="\"%s\""%url, sites__id__exact=current_site.pk).count() > 0
+		if not (path == "/admin" or path.startswith("/admin/") or is_flat):
 			deactivation = SiteDeactivation.objects.filter(site=current_site)
 			
 			# If we found a deactivation, redirect to it's redirect URL.
